@@ -1,17 +1,13 @@
-#スクレイピング
+#ライブラリのインポート
 from pprint import pprint
 import requests
 
-# url = "https://tech-diary.net"
-# r = requests.get(url)
-# print(r.text)
-#API
+#URLの設定
+BASE_URL = "https://coincheck.com" 
+url = BASE_URL + "/api/ticker"
 
-url = "https://coincheck.com/api/ticker"
+
+#情報を取得する
 r = requests.get(url)
-#pprint(r.json())
-
-d_dict = {}
-d_dict = r.json
-
-pprint(d_dict)
+r = r.json()
+print(r["high"])
