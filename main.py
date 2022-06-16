@@ -1,4 +1,4 @@
-# Lessun10 成り行き買い
+# Lessun11 成り行き売り
 # ライブラリのインポート
 import configparser
 import hmac
@@ -23,8 +23,8 @@ nonce = str(int(time.time()))
 
 params = {
     "pair": "btc_jpy",
-    "order_type" : "market_buy",
-    "market_buy_amount" : 16000
+    "order_type" : "market_sell",
+    "amount" : 0.0001
 }
 
 body = json.dumps(params)
