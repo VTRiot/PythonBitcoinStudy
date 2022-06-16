@@ -1,9 +1,8 @@
-# Lessun9 指値注文
+# Lessun8
 # ライブラリのインポート
 import configparser
 import hmac
 import hashlib
-import json
 from pprint import pprint
 import time
 
@@ -17,18 +16,11 @@ SERCRET_KEY = conf["coincheck"]["sercret_key"]
 
 # URLの設定
 BASE_URL = "https://coincheck.com"
-url = BASE_URL + "/api/exchange/orders"
+url = BASE_URL + "/api/accounts/balance"
 
 nonce = str(int(time.time()))
 
-params = {
-    "pair": "btc_jpy",
-    "order_type" : "buy",
-    "rate" : 3_000_000,
-    "amount" : 0.005
-}
-
-body = json.dumps(params)
+body = ""
 message = nonce + url + body
 
 signature = hmac.new(SERCRET_KEY.encode(),
@@ -42,10 +34,13 @@ headers = {
     "Content-Type": "application/json"
 }
 
+# 情報を取得する
+# params = {
+#     "limit": 5
+# }
 
 # r = requests.get(url, params=params)
-#r = requests.get(url, headers=headers)
-r = requests.post(url, headers=headers,data=body)
+r = requests.get(url, headers=headers)
 r = r.json()
 # pprint(r["asks"][::-1])
 # pprint(r["bids"])
