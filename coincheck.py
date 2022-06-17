@@ -49,23 +49,28 @@ class Coincheck(object):
         return self.ticker()["last"]
 
     #order_books板情報の取得
-    def order_books(self):
+    def order_books(self,params=None):
         endpoint = self.url + "/api/order_books"
-        limit_num = 5
-        params = {
-            "limit":limit_num   
-        }
+        # limit_num = 5
+        # params = {
+        #     "limit":limit_num   
+        # }
         return self._request(endpoint=endpoint,params=params)
     #trades
     def trades(self, params):
         endpoint = self.url + '/api/trades'
         return self._request(endpoint=endpoint, params=params)    
     
-    #balance
+    #balance残高情報
     def balance(self):
         endpoint = self.url + '/api/accounts/balance'
         return self._request(endpoint=endpoint)
 
+    @property
+    def position(self):
+        balance = self.balance()
+        return {k: v for k, v in balance.items()
+                if isinstance(v, str) and float(v)}
     #order
     def order(self, params):
         endpoint = self.url + '/api/exchange/orders'
