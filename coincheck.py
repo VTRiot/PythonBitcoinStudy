@@ -1,4 +1,4 @@
- # Lessun11 共通処理をクラス化する
+ # Lessun11plus Ticker以外を自前でClass化トライ
  # ライブラリのインポート
 import hmac
 import hashlib
@@ -48,8 +48,25 @@ class Coincheck(object):
     def last(self):
         return self.ticker()["last"]
 
-    #order_books
+    #order_books板情報の取得
+    def order_books(self):
+        endpoint = self.url + "/api/order_books"
+        limit_num = 5
+        params = {
+            "limit":limit_num   
+        }
+        return self._request(endpoint=endpoint,params=params)
     #trades
-    #balance
-    #order
+    def trades(self, params):
+        endpoint = self.url + '/api/trades'
+        return self._request(endpoint=endpoint, params=params)    
     
+    #balance
+    def balance(self):
+        endpoint = self.url + '/api/accounts/balance'
+        return self._request(endpoint=endpoint)
+
+    #order
+    def order(self, params):
+        endpoint = self.url + '/api/exchange/orders'
+        return self._request(endpoint=endpoint, params=params, method='POST')

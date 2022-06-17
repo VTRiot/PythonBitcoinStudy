@@ -13,4 +13,6 @@ coincheck = Coincheck(access_key=ACCESS_KEY,sercret_key=SERCRET_KEY)
 # ticker = coincheck.ticker()
 # print(ticker)
 
-print(coincheck.last)
+#print(coincheck.last)
+r = coincheck.order_books
+print(r["asks"])
