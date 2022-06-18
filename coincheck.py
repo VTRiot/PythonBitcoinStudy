@@ -75,3 +75,17 @@ class Coincheck(object):
     def order(self, params):
         endpoint = self.url + '/api/exchange/orders'
         return self._request(endpoint=endpoint, params=params, method='POST')
+
+    # 直近の取引内容を確認する
+    def transaction(self):
+        endpoint = self.url + "/api/exchange/orders/transactions"
+        return self._request(endpoint=endpoint)
+
+    # 自分が購入したビットコインの価格を確認
+    @property
+    def ask_rate(self):
+        transaction = self.transaction()
+        
+
+
+    #ビットコインのマイオ数に応じた価格を確認する
