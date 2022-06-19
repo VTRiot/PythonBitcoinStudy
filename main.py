@@ -15,7 +15,7 @@ ACCESS_KEY = conf["coincheck"]["access_key"]
 SERCRET_KEY = conf["coincheck"]["sercret_key"]
 
 coincheck = Coincheck(access_key=ACCESS_KEY,sercret_key=SERCRET_KEY)
-interval = 60 * 10
+interval = 1
 duration = 20
 AMOUNT = 0.005
 df = pd.DataFrame()
@@ -34,6 +34,7 @@ while True:
     d = {"price": coincheck.last}
     df_t = pd.DataFrame.from_dict(d,orient='index').T
     df = pd.concat([df,df_t], ignore_index=True)
+    print(df)
 
     # print(df)
     # 初期化完了判定
@@ -57,9 +58,9 @@ while True:
                 "pair" :"btc_jpy",
                 "market_buy_amount":position["btc"]
             }
-            r = coincheck.order(params)
-            print(r)
-            send_message_to_line(r)
+            # r = coincheck.order(params)
+            # print(r)
+            # send_message_to_line(r)
             print("Sell!!!")
 
     else:
@@ -72,7 +73,8 @@ while True:
                 "pair" :"btc_jpy",
                 "market_buy_amount":market_buy_amount["price"]
             }
-            r = coincheck.order(params)
-            send_message_to_line(r)
-            print(r)
+            # r = coincheck.order(params)
+            # send_message_to_line(r)
+            # print(r)
             print("buy!!!")
+    df = df.iloc[1:, :]
