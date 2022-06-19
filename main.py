@@ -6,6 +6,7 @@ import time
 import pandas as pd
 
 from coincheck import Coincheck
+from utils.notify import send_message_to_line
 
 conf = configparser.ConfigParser()
 conf.read("config.ini")
@@ -18,6 +19,7 @@ interval = 60 * 10
 duration = 20
 AMOUNT = 0.005
 df = pd.DataFrame()
+send_message_to_line("start_auto_trading...!")
 
 # BTCの最新価格を取得し続ける
 while True:
@@ -25,6 +27,7 @@ while True:
     position = coincheck.position
 
     if not position.get("jpy"):
+        send_message_to_line("My account balance is Zero!")
         raise
 
     # df = df.append({"price": coincheck.last}, ignore_index=True)
@@ -56,6 +59,7 @@ while True:
             }
             r = coincheck.order(params)
             print(r)
+            send_message_to_line(r)
             print("Sell!!!")
 
     else:
@@ -69,5 +73,6 @@ while True:
                 "market_buy_amount":market_buy_amount["price"]
             }
             r = coincheck.order(params)
+            send_message_to_line(r)
             print(r)
             print("buy!!!")
